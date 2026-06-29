@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ScriptedPhysique — Online Fitness Coaching</title>
+<meta name="description" content="ScriptedPhysique — personalised online fitness coaching for busy professionals. Built by an IT engineer, driven by results." />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0D0D0D;
+  --white: #FAFAF8;
+  --gray-50: #EEECEA;
+  --gray-100: #D8D6D0;
+  --gray-400: #888780;
+  --gray-600: #4A4944;
+  --accent: #C8A96E;
+  --accent-light: #F2EAD8;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 4rem;
+  background: rgba(250,250,248,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gray-100);
+}
+.nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.25rem; letter-spacing: -0.01em; }
+.nav-logo .scripted { color: var(--black); }
+.nav-logo .physique { color: var(--accent); }
+.nav-links { display: flex; gap: 2.5rem; font-size: 0.875rem; color: var(--gray-600); }
+.nav-links a:hover { color: var(--black); }
+.nav-cta {
+  font-size: 0.875rem; font-weight: 500;
+  padding: 0.6rem 1.5rem;
+  background: var(--black); color: var(--white);
+  border-radius: 2px; transition: background 0.2s;
+}
+.nav-cta:hover { background: #333; }
+
+/* ─── HERO ─── */
+#hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  padding: 8rem 4rem 4rem; gap: 4rem;
+  background: var(--white);
+}
+.hero-eyebrow {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--accent); }
+.hero-h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  line-height: 1.08; letter-spacing: -0.02em;
+  color: var(--black); margin-bottom: 1.5rem;
+}
+.hero-h1 em { font-style: italic; color: var(--gray-600); }
+.hero-sub { font-size: 1.0625rem; color: var(--gray-600); max-width: 480px; margin-bottom: 2.5rem; line-height: 1.8; }
+.hero-actions { display: flex; align-items: center; gap: 1.5rem; }
+.btn-primary {
+  padding: 0.875rem 2rem; background: var(--black); color: var(--white);
+  font-size: 0.9375rem; font-weight: 500; border-radius: 2px; transition: background 0.2s;
+}
+.btn-primary:hover { background: #333; }
+.btn-ghost { font-size: 0.875rem; color: var(--gray-600); display: flex; align-items: center; gap: 0.5rem; }
+.btn-ghost::after { content: '→'; transition: transform 0.2s; }
+.btn-ghost:hover::after { transform: translateX(4px); }
+.hero-stat { display: flex; gap: 2.5rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--gray-100); }
+.stat-num { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; margin-bottom: 0.25rem; color: var(--black); }
+.stat-label { font-size: 0.8125rem; color: var(--gray-400); }
+
+.hero-visual { position: relative; height: 580px; display: flex; align-items: center; justify-content: center; }
+.hero-card-main {
+  background: var(--gray-50); border: 1px solid var(--gray-100);
+  border-radius: 4px; padding: 2rem; width: 320px; position: relative; z-index: 2;
+}
+.hero-card-main .card-tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; font-weight: 500; }
+.hero-card-main .card-title { font-family: 'DM Serif Display', serif; font-size: 1.375rem; margin-bottom: 0.75rem; color: var(--black); }
+.hero-card-main .card-body { font-size: 0.875rem; color: var(--gray-600); line-height: 1.7; }
+.hero-card-accent {
+  position: absolute; top: 60px; right: -30px;
+  background: var(--black); color: var(--white);
+  border-radius: 4px; padding: 1.25rem 1.5rem; width: 200px; z-index: 3;
+}
+.hero-card-accent .ca-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.hero-card-accent .ca-val { font-family: 'DM Serif Display', serif; font-size: 1.75rem; }
+.hero-card-accent .ca-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
+.hero-card-mini {
+  position: absolute; bottom: 80px; left: -20px;
+  background: var(--white); border: 1px solid var(--gray-100);
+  border-radius: 4px; padding: 1rem 1.25rem; z-index: 3;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.hero-card-mini .dot { width: 8px; height: 8px; border-radius: 50%; background: #4CAF82; flex-shrink: 0; }
+.hero-card-mini .mini-text { font-size: 0.8125rem; font-weight: 500; color: var(--black); }
+.hero-card-mini .mini-sub { font-size: 0.75rem; color: var(--gray-400); }
+
+/* ─── SECTION COMMONS ─── */
+section { padding: 7rem 4rem; }
+.section-tag {
+  font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--accent); font-weight: 500; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.section-tag::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--accent); }
+.section-h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.12; letter-spacing: -0.02em;
+  color: var(--black); margin-bottom: 1rem;
+}
+.section-sub { font-size: 1rem; color: var(--gray-600); max-width: 520px; line-height: 1.8; }
+
+/* ─── PROCESS ─── */
+#process { background: #1A1A18; }
+#process .section-tag { color: var(--accent); }
+#process .section-tag::before { background: var(--accent); }
+#process .section-h2 { color: #F5F4F0; }
+#process .section-sub { color: rgba(245,244,240,0.55); }
+.process-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
+.process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); }
+.process-step { background: #1A1A18; padding: 2.5rem 2rem; }
+.step-num { font-family: 'DM Serif Display', serif; font-size: 3.5rem; line-height: 1; color: rgba(200,169,110,0.25); margin-bottom: 1.5rem; }
+.step-title { font-size: 1rem; font-weight: 500; color: #F0EFE8; margin-bottom: 0.75rem; }
+.step-body { font-size: 0.875rem; color: rgba(240,239,232,0.55); line-height: 1.75; }
+
+/* ─── TESTIMONIALS ─── */
+#testimonials { background: var(--white); }
+.testimonials-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
+.testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.testi-card { border: 1.5px solid var(--gray-100); padding: 2rem; border-radius: 2px; display: flex; flex-direction: column; gap: 1.25rem; background: var(--white); }
+.testi-quote { font-size: 0.9375rem; color: var(--gray-600); line-height: 1.8; font-style: italic; flex: 1; }
+.testi-author { display: flex; align-items: center; gap: 0.75rem; margin-top: auto; }
+.testi-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--accent-light); display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 500; color: #7A5E2A; flex-shrink: 0;
+}
+.testi-name { font-size: 0.875rem; font-weight: 500; color: var(--black); }
+.testi-role { font-size: 0.75rem; color: var(--gray-400); }
+
+/* ─── ABOUT ─── */
+#about { background: var(--black); color: var(--white); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.about-tag { color: var(--accent); }
+.about-tag::before { background: var(--accent); }
+.about-h2 { color: var(--white); }
+.about-body { font-size: 1rem; color: rgba(255,255,255,0.55); line-height: 1.9; margin-bottom: 2rem; }
+.about-list { display: flex; flex-direction: column; gap: 1rem; }
+.about-item { display: flex; align-items: flex-start; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.about-item:last-child { border-bottom: none; }
+.about-bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 9px; }
+.about-item-text { font-size: 0.9375rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
+
+/* ─── TRANSFORMATIONS ─── */
+/* TO ADD YOUR PHOTOS:
+   1. Create a folder called "images" next to this index.html file
+   2. Add your client photos named: client-1.jpg, client-2.jpg, etc.
+   3. Replace the src values below with: src="images/client-1.jpg" etc. */
+#transformations { background: var(--gray-50); }
+.transforms-header { margin-bottom: 3rem; }
+.transforms-note { font-size: 0.875rem; color: var(--gray-400); margin-top: 0.5rem; }
+.transforms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.transform-card {
+  aspect-ratio: 4/3; background: var(--gray-100);
+  border: 1px solid var(--gray-100); border-radius: 2px;
+  overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;
+}
+.transform-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.transform-label {
+  position: absolute; bottom: 0.75rem; left: 0.75rem;
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--black); color: var(--white);
+  padding: 0.25rem 0.625rem; border-radius: 1px;
+}
+
+/* ─── BLOG ─── */
+#blog { background: var(--white); }
+.blog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+.blog-link { font-size: 0.875rem; color: var(--gray-600); display: flex; align-items: center; gap: 0.375rem; }
+.blog-link::after { content: '→'; }
+.blog-link:hover { color: var(--black); }
+.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.blog-card { border: 1.5px solid var(--gray-100); background: var(--white); padding: 2rem; border-radius: 2px; }
+.blog-card-tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; font-weight: 500; }
+.blog-card-title { font-family: 'DM Serif Display', serif; font-size: 1.1875rem; line-height: 1.3; margin-bottom: 0.75rem; color: var(--black); }
+.blog-card-body { font-size: 0.875rem; color: var(--gray-600); line-height: 1.75; margin-bottom: 1.25rem; }
+.blog-card-cta { font-size: 0.8125rem; font-weight: 500; color: var(--black); display: flex; align-items: center; gap: 0.375rem; }
+.blog-card-cta::after { content: '→'; }
+
+/* ─── CONTACT ─── */
+/* FORMSPREE: replace YOUR_FORM_ID below with your actual Formspree form ID */
+#contact { background: var(--gray-50); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+.contact-detail { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.contact-detail-item { font-size: 0.875rem; color: var(--gray-600); }
+.contact-detail-item strong { color: var(--black); font-weight: 500; }
+.contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-label { font-size: 0.8125rem; font-weight: 500; color: var(--gray-600); }
+.form-input, .form-select, .form-textarea {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9375rem; color: var(--black);
+  background: var(--white);
+  border: 1.5px solid var(--gray-100);
+  padding: 0.75rem 1rem; border-radius: 2px; outline: none;
+  transition: border-color 0.15s; width: 100%;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); }
+.form-textarea { resize: vertical; min-height: 120px; }
+.form-submit {
+  padding: 0.9375rem 2rem; background: var(--black); color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9375rem; font-weight: 500;
+  border: none; border-radius: 2px; cursor: pointer;
+  transition: background 0.2s; align-self: flex-start;
+}
+.form-submit:hover { background: #333; }
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 3rem 4rem; background: var(--black);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo { font-family: 'DM Serif Display', serif; font-size: 1.125rem; }
+.footer-logo .scripted { color: var(--white); }
+.footer-logo .physique { color: var(--accent); }
+.footer-copy { font-size: 0.8125rem; color: rgba(255,255,255,0.35); }
+.footer-links { display: flex; gap: 1.5rem; font-size: 0.8125rem; color: rgba(255,255,255,0.45); }
+.footer-links a:hover { color: var(--white); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.hero-text { animation: fadeUp 0.7s ease both; }
+.hero-visual { animation: fadeUp 0.7s 0.15s ease both; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+  .hero-visual { display: none; }
+  section { padding: 4rem 1.5rem; }
+  .process-grid { grid-template-columns: 1fr 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .transforms-grid { grid-template-columns: 1fr 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-logo"><span class="scripted">Scripted</span><span class="physique">Physique</span></div>
+  <div class="nav-links">
+    <a href="#process">How It Works</a>
+    <a href="#testimonials">Results</a>
+    <a href="#about">About</a>
+    <a href="#blog">Blog</a>
+  </div>
+  <a href="#contact" class="nav-cta">Work With Me</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Online Fitness Coaching</div>
+    <h1 class="hero-h1">Your body,<br><em>engineered</em><br>to perform.</h1>
+    <p class="hero-sub">Built for busy professionals. A systematic, no-guesswork approach to fitness — designed by an IT engineer who hates inefficiency as much as you do.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start Your Transformation</a>
+      <a href="#process" class="btn-ghost">See how it works</a>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-item"><div class="stat-num">5+</div><div class="stat-label">Years coaching</div></div>
+      <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Personalised plans</div></div>
+      <div class="stat-item"><div class="stat-num">Cert IV</div><div class="stat-label">Fitness certified</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-main">
+      <div class="card-tag">Your programme</div>
+      <div class="card-title">Week 3 — Upper Body Strength</div>
+      <div class="card-body">4 sessions · 45–60 min each · Adapted for your home gym setup and travel schedule.</div>
+    </div>
+    <div class="hero-card-accent">
+      <div class="ca-label">This month</div>
+      <div class="ca-val">+3.2 kg</div>
+      <div class="ca-sub">lean muscle gained</div>
+    </div>
+    <div class="hero-card-mini">
+      <div class="dot"></div>
+      <div>
+        <div class="mini-text">Weekly check-in done</div>
+        <div class="mini-sub">Vishal reviewed your log</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCESS ─── -->
+<section id="process">
+  <div class="process-header">
+    <div>
+      <div class="section-tag">The process</div>
+      <h2 class="section-h2">Four steps to<br>your best shape</h2>
+    </div>
+    <p class="section-sub">No complicated theories. No unrealistic expectations. Just a clear, repeatable system that works around your professional life.</p>
+  </div>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div class="step-title">Initial Consultation</div>
+      <p class="step-body">Fill out a quick form so we can understand your current fitness level, lifestyle, and schedule. The first step toward a smarter approach.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div class="step-title">Define Your Goals</div>
+      <p class="step-body">Together we pinpoint exactly what you want — fat loss, muscle, strength, or all three — and map out a realistic roadmap to get there.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div class="step-title">Your Personalised Plan</div>
+      <p class="step-body">A fully custom workout programme built around your real schedule, equipment, and constraints. Something you'll actually stick to.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <div class="step-title">Transform Together</div>
+      <p class="step-body">Weekly check-ins, ongoing support, and accountability. We adapt the plan as you progress and celebrate every milestone along the way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section id="testimonials">
+  <div class="testimonials-header">
+    <div>
+      <div class="section-tag">Client results</div>
+      <h2 class="section-h2">Real people,<br>real transformations</h2>
+    </div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <p class="testi-quote">"After a year, the transformation has been amazing. Vishal has a true coaching mindset that keeps you motivated and committed. I feel healthier, I can see real muscle definition, and I genuinely enjoy going to the gym now."</p>
+      <div class="testi-author"><div class="testi-avatar">GR</div><div><div class="testi-name">Gabriela Rey</div><div class="testi-role">HR Coordinator</div></div></div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-quote">"I started with 4 push-ups, now I can do 13. My strength, cardio, and flexibility have all improved greatly. Vishal is attentive, supportive, and genuinely invested in his clients' progress."</p>
+      <div class="testi-author"><div class="testi-avatar">DU</div><div><div class="testi-name">Daniela Umemoto</div><div class="testi-role">Analyst</div></div></div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-quote">"I've been able to make significant progress — building definition in my back muscles and improving body composition. I'm so grateful for his expertise and encouragement."</p>
+      <div class="testi-author"><div class="testi-avatar">KR</div><div><div class="testi-name">Karmelia Rosa</div><div class="testi-role">Senior Business Analyst</div></div></div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-quote">"After about half a year, my upper body has more size and definition whilst my waist size has gone down. The results speak for themselves."</p>
+      <div class="testi-author"><div class="testi-avatar">DD</div><div><div class="testi-name">Desmond Daritan</div><div class="testi-role">Senior Financial Accountant</div></div></div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-quote">"After 6 months following a proper plan and diet, I began to see real results. I now feel confident I can achieve my best shape. I wouldn't have done it without an expert who truly listens."</p>
+      <div class="testi-author"><div class="testi-avatar">IS</div><div><div class="testi-name">Ilaria Scarcella</div><div class="testi-role">Speech Pathologist</div></div></div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-quote">"Working with Vishal has been a game-changer. His personalised programming helped me build strength and tone up in all the right places. I feel stronger, healthier, and more confident than ever."</p>
+      <div class="testi-author"><div class="testi-avatar">SA</div><div><div class="testi-name">Shirley Antoine</div><div class="testi-role">Senior Tax Accountant</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-tag about-tag">About Vishal</div>
+      <h2 class="section-h2 about-h2">What happens when an IT engineer gets serious about fitness?</h2>
+    </div>
+    <div>
+      <p class="about-body">Five years ago, I was hitting the gym with no real plan — just hoping something would work. As an engineer, I hate inefficiency. So I studied what actually works, earned my Certificate IV in Fitness and First Aid certification, and started treating fitness like any other problem: step by step, with a clear plan and no wasted time.</p>
+      <p class="about-body">Your fitness plan should work with your life, not against it. That's why I focus on your actual schedule, your real constraints, and create something that fits your professional demands.</p>
+      <div class="about-list">
+        <div class="about-item"><div class="about-bullet"></div><div class="about-item-text">Certificate IV in Fitness — nationally accredited</div></div>
+        <div class="about-item"><div class="about-bullet"></div><div class="about-item-text">First Aid certified coach</div></div>
+        <div class="about-item"><div class="about-bullet"></div><div class="about-item-text">Systematic, engineer-brained programming approach</div></div>
+        <div class="about-item"><div class="about-bullet"></div><div class="about-item-text">Flexible sessions for business travellers and WFH professionals</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRANSFORMATIONS ─── -->
+<!-- TO ADD YOUR PHOTOS:
+     1. Create a folder called "images" next to this index.html
+     2. Save your client photos as: client-1.jpg, client-2.jpg, client-3.jpg etc.
+     3. Replace each src below, e.g. src="images/client-1.jpg"
+     Tip: compress photos at squoosh.app before uploading for faster load times -->
+<section id="transformations">
+  <div class="transforms-header">
+    <div class="section-tag">Transformations</div>
+    <h2 class="section-h2">The results</h2>
+    <p class="transforms-note">Before &amp; after photos from real ScriptedPhysique clients.</p>
+  </div>
+  <div class="transforms-grid">
+    <div class="transform-card">
+      <img src="images/client-1.jpg" alt="Client 1 transformation" />
+      <div class="transform-label">Client 1</div>
+    </div>
+    <div class="transform-card">
+      <img src="images/client-2.jpg" alt="Client 2 transformation" />
+      <div class="transform-label">Client 2</div>
+    </div>
+    <div class="transform-card">
+      <img src="images/client-3.jpg" alt="Client 3 transformation" />
+      <div class="transform-label">Client 3</div>
+    </div>
+    <div class="transform-card">
+      <img src="images/client-4.jpg" alt="Client 4 transformation" />
+      <div class="transform-label">Client 4</div>
+    </div>
+    <div class="transform-card">
+      <img src="images/client-5.jpg" alt="Client 5 transformation" />
+      <div class="transform-label">Client 5</div>
+    </div>
+    <div class="transform-card">
+      <img src="images/client-6.jpg" alt="Client 6 transformation" />
+      <div class="transform-label">Client 6</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BLOG ─── -->
+<!-- Blog cards below are placeholders. Once your Hashnode blog is live,
+     update the href links and replace titles/descriptions with real posts. -->
+<section id="blog">
+  <div class="blog-header">
+    <div>
+      <div class="section-tag">Blog</div>
+      <h2 class="section-h2">From the coaching desk</h2>
+    </div>
+    <a href="https://scriptedphysique.hashnode.dev" class="blog-link">All posts</a>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-card">
+      <div class="blog-card-tag">Training</div>
+      <div class="blog-card-title">Why busy professionals plateau — and how to break through</div>
+      <p class="blog-card-body">Most people stall because their programme doesn't adapt to their schedule. Here's how to build sessions that flex with your week.</p>
+      <a href="https://scriptedphysique.hashnode.dev" class="blog-card-cta">Read article</a>
+    </div>
+    <div class="blog-card">
+      <div class="blog-card-tag">Nutrition</div>
+      <div class="blog-card-title">Eating for muscle on a corporate travel schedule</div>
+      <p class="blog-card-body">Hotels, client dinners, airport food — staying on track doesn't require perfection. It requires a system.</p>
+      <a href="https://scriptedphysique.hashnode.dev" class="blog-card-cta">Read article</a>
+    </div>
+    <div class="blog-card">
+      <div class="blog-card-tag">Mindset</div>
+      <div class="blog-card-title">The engineer's approach to setting fitness goals that stick</div>
+      <p class="blog-card-body">Treat your body like a project. Define inputs, measure outputs, and iterate. The same method that works in tech works in the gym.</p>
+      <a href="https://scriptedphysique.hashnode.dev" class="blog-card-cta">Read article</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<!-- IMPORTANT: Replace YOUR_FORM_ID in the action URL below with your Formspree form ID.
+     Sign up free at formspree.io → New Form → copy the ID from the endpoint URL. -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-intro">
+      <div class="section-tag">Get in touch</div>
+      <h2 class="section-h2">Ready to build<br>something that lasts?</h2>
+      <p class="section-sub">Fill out the form and Vishal will be in touch within 24 hours to discuss your goals and see if we're a good fit.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-item"><strong>Based in</strong> — Sydney, Australia</div>
+        <div class="contact-detail-item"><strong>Clients</strong> — Australia-wide &amp; international</div>
+        <div class="contact-detail-item"><strong>Response time</strong> — within 24 hours</div>
+      </div>
+    </div>
+    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First name</label>
+          <input class="form-input" type="text" name="first_name" placeholder="Jane" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last name</label>
+          <input class="form-input" type="text" name="last_name" placeholder="Smith" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" name="email" placeholder="jane@company.com" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input class="form-input" type="tel" name="phone" placeholder="+61 4xx xxx xxx" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Primary goal</label>
+        <select class="form-select" name="goal">
+          <option value="">Select your main goal</option>
+          <option>Fat loss</option>
+          <option>Build muscle</option>
+          <option>Increase strength</option>
+          <option>Improve fitness</option>
+          <option>General health &amp; wellbeing</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sessions per week you can commit to</label>
+        <select class="form-select" name="sessions_per_week">
+          <option value="">Select</option>
+          <option>1</option><option>2</option><option>3</option>
+          <option>4</option><option>5</option><option>6+</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Current weight, height, and age</label>
+        <input class="form-input" type="text" name="stats" placeholder="e.g. 78 kg · 180 cm · 32 yrs" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Anything else you'd like me to know?</label>
+        <textarea class="form-textarea" name="message" placeholder="Injuries, equipment, schedule constraints…"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send enquiry →</button>
+    </form>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-logo"><span class="scripted">Scripted</span><span class="physique">Physique</span></div>
+  <div class="footer-copy">© 2026 ScriptedPhysique. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#process">How it works</a>
+    <a href="#testimonials">Results</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
