@@ -58,10 +58,11 @@ nav {
 /* ─── HERO ─── */
 #hero {
   min-height: 100vh;
-  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
-  padding: 8rem 4rem 4rem; gap: 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 8rem 4rem 4rem;
   background: var(--white);
 }
+.hero-text { width: 100%; max-width: none; animation: fadeUp 0.7s ease both; }
 .hero-eyebrow {
   font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em;
   text-transform: uppercase; color: var(--accent);
@@ -76,7 +77,7 @@ nav {
   color: var(--black); margin-bottom: 1.5rem;
 }
 .hero-h1 em { font-style: italic; color: var(--gray-600); }
-.hero-sub { font-size: 1.0625rem; color: var(--gray-600); max-width: 480px; margin-bottom: 2.5rem; line-height: 1.8; }
+.hero-sub { font-size: 1.0625rem; color: var(--gray-600); max-width: 42rem; margin-bottom: 2.5rem; line-height: 1.8; }
 .hero-actions { display: flex; align-items: center; gap: 1.5rem; }
 .btn-primary {
   padding: 0.875rem 2rem; background: var(--black); color: var(--white);
@@ -89,32 +90,6 @@ nav {
 .hero-stat { display: flex; gap: 2.5rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--gray-100); }
 .stat-num { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; margin-bottom: 0.25rem; color: var(--black); }
 .stat-label { font-size: 0.8125rem; color: var(--gray-400); }
-
-.hero-visual { position: relative; height: 580px; display: flex; align-items: center; justify-content: center; }
-.hero-card-main {
-  background: var(--gray-50); border: 1px solid var(--gray-100);
-  border-radius: 4px; padding: 2rem; width: 320px; position: relative; z-index: 2;
-}
-.hero-card-main .card-tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; font-weight: 500; }
-.hero-card-main .card-title { font-family: 'DM Serif Display', serif; font-size: 1.375rem; margin-bottom: 0.75rem; color: var(--black); }
-.hero-card-main .card-body { font-size: 0.875rem; color: var(--gray-600); line-height: 1.7; }
-.hero-card-accent {
-  position: absolute; top: 60px; right: -30px;
-  background: var(--black); color: var(--white);
-  border-radius: 4px; padding: 1.25rem 1.5rem; width: 200px; z-index: 3;
-}
-.hero-card-accent .ca-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
-.hero-card-accent .ca-val { font-family: 'DM Serif Display', serif; font-size: 1.75rem; }
-.hero-card-accent .ca-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
-.hero-card-mini {
-  position: absolute; bottom: 80px; left: -20px;
-  background: var(--white); border: 1px solid var(--gray-100);
-  border-radius: 4px; padding: 1rem 1.25rem; z-index: 3;
-  display: flex; align-items: center; gap: 0.75rem;
-}
-.hero-card-mini .dot { width: 8px; height: 8px; border-radius: 50%; background: #4CAF82; flex-shrink: 0; }
-.hero-card-mini .mini-text { font-size: 0.8125rem; font-weight: 500; color: var(--black); }
-.hero-card-mini .mini-sub { font-size: 0.75rem; color: var(--gray-400); }
 
 /* ─── SECTION COMMONS ─── */
 section { padding: 7rem 4rem; }
@@ -253,15 +228,11 @@ footer {
 
 /* ─── ANIMATIONS ─── */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-.hero-text { animation: fadeUp 0.7s ease both; }
-.hero-visual { animation: fadeUp 0.7s 0.15s ease both; }
-
 /* ─── RESPONSIVE ─── */
 @media (max-width: 960px) {
   nav { padding: 1rem 1.5rem; }
   .nav-links { display: none; }
-  #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
-  .hero-visual { display: none; }
+  #hero { padding: 7rem 1.5rem 3rem; }
   section { padding: 4rem 1.5rem; }
   .process-grid { grid-template-columns: 1fr 1fr; }
   .testi-grid { grid-template-columns: 1fr; }
@@ -300,25 +271,6 @@ footer {
       <div class="stat-item"><div class="stat-num">5+</div><div class="stat-label">Years coaching</div></div>
       <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Personalised plans</div></div>
       <div class="stat-item"><div class="stat-num">Cert IV</div><div class="stat-label">Fitness certified</div></div>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-card-main">
-      <div class="card-tag">Your programme</div>
-      <div class="card-title">Week 3 — Upper Body Strength</div>
-      <div class="card-body">4 sessions · 45–60 min each · Adapted for your home gym setup and travel schedule.</div>
-    </div>
-    <div class="hero-card-accent">
-      <div class="ca-label">This month</div>
-      <div class="ca-val">+3.2 kg</div>
-      <div class="ca-sub">lean muscle gained</div>
-    </div>
-    <div class="hero-card-mini">
-      <div class="dot"></div>
-      <div>
-        <div class="mini-text">Weekly check-in done</div>
-        <div class="mini-sub">Vishal reviewed your log</div>
-      </div>
     </div>
   </div>
 </section>
